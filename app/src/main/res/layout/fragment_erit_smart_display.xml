@@ -1,3 +1,4 @@
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,232 +7,239 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.kryptkode.cyberman.eritsmartdisplay.fragments.EritSmartDisplayFragment">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="3">
-
-        <ImageView
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:srcCompat = "@drawable/ic_flash_on_black_24dp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_select_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/select_message"
-                />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_outline"
-                android:entries="@array/messages"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="3">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="8dp"
-                    app:srcCompat="@drawable/ic_mode_edit_black_24dp"/>
+                    android:layout_width="104dp"
+                    android:layout_height="104dp"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:srcCompat = "@drawable/ic_flash_on_black_24dp" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                    <EditText
-                        android:id="@+id/edit_enter_message"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_select_message"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:hint="@string/enter_the_message"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:ems="20"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_message"
+                        style="@style/HeaderTextViewLabel"
+                        />
 
-                </android.support.design.widget.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_outline"
+                        style="@style/SpinnerStyle"
+                        android:entries="@array/messages"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="8dp"
+                            app:srcCompat="@drawable/ic_mode_edit_black_24dp"/>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <EditText
+                                android:id="@+id/edit_enter_message"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="16dp"
+                                android:hint="@string/enter_the_message"
+                                android:inputType="text"
+                                android:textSize="20sp"
+                                android:maxLines="1"
+                                android:ems="20"/>
+
+                        </android.support.design.widget.TextInputLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_weight="2">
+
+                    <GridLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:useDefaultMargins="true"
+                        android:layout_margin="8dp"
+                        android:columnCount="4"
+                        android:rowCount="4">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/price_board"
+                            android:layout_row="0"
+                            android:layout_column="0"
+                            android:layout_columnSpan="4"
+                            android:layout_gravity="center_horizontal"
+                            style="@style/HeaderTextViewLabel"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pms"
+                            android:layout_row="1"
+                            android:layout_column="0"
+                            style="@style/PriceBoardTextView"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dpk"
+                            android:layout_row="2"
+                            android:layout_column="0"
+                            style="@style/PriceBoardTextView"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ago"
+                            android:layout_row="3"
+                            android:layout_column="0"
+                            style="@style/PriceBoardTextView"
+                            />
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="1"
+                            android:layout_column="1"
+                            android:hint="@string/zeros_three"
+                            style="@style/EditTextStyle000"
+                            />
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="2"
+                            android:layout_column="1"
+                            android:hint="@string/zeros_three"
+                            style="@style/EditTextStyle000"
+                            />
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="3"
+                            android:layout_column="1"
+                            android:hint="@string/zeros_three"
+                            style="@style/EditTextStyle000"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="1"
+                            android:layout_column="2"
+                            android:text=":"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="2"
+                            android:layout_column="2"
+                            android:text=":"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="3"
+                            android:layout_column="2"
+                            android:text=":"
+                            />
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="1"
+                            android:layout_column="3"
+                            android:hint="@string/zeros"
+                            style="@style/EditTextStyle00"
+                            />
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="2"
+                            android:layout_column="3"
+                            android:hint="@string/zeros"
+                            style="@style/EditTextStyle00"
+                            />
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="3"
+                            android:layout_column="3"
+                            android:hint="@string/zeros"
+                            style="@style/EditTextStyle00"
+                            />
+
+                    </GridLayout>
+
+                </RelativeLayout>
 
 
             </LinearLayout>
 
 
-    </LinearLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="2">
-
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:useDefaultMargins="true"
-                android:columnCount="4"
-                android:rowCount="4">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price_board"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:layout_columnSpan="4"
-                    android:layout_gravity="center_horizontal" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ProgressBar
+                    android:id="@+id/loading_indicator"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pms"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dpk"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ago"
-                    android:layout_row="3"
-                    android:layout_column="0"
+                    android:layout_below="@id/loading_indicator"
+                    android:layout_centerInParent="true"
+                    android:text="@string/loading"
+                    android:visibility="invisible"
                     />
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="1"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="3"
-                    android:hint="@string/zeros_three"
-                    />
+            </RelativeLayout>
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="1"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="3"
-                    android:hint="@string/zeros_three"
-                    />
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="1"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="3"
-                    android:hint="@string/zeros_three"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="2"
-                    android:text=":"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="2"
-                    android:text=":"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="2"
-                    android:text=":"
-                    />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="3"
-                    android:hint="@string/zeros"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="2"
-                    />
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="3"
-                    android:hint="@string/zeros"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="2"
-                    />
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="3"
-                    android:hint="@string/zeros"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="2"
-                    />
-
-            </GridLayout>
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ProgressBar
-            android:id="@+id/loading_indicator"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/loading_indicator"
-            android:layout_centerInParent="true"
-            android:text="@string/loading"
-            android:visibility="invisible"
-            />
-
-    </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:title="@string/select_the_number_of_messages_title"
+        android:summary="@string/number_of_messages_summary"
+        android:inputType="number"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:defaultValue="8"
+        android:persistent="true"
+        android:key="number_of_msgs"
+        />
+
+
 
 </PreferenceScreen>

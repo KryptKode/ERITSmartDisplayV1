@@ -19,4 +19,6 @@
     <string name="ago">AGO</string>
     <string name="zeros">00</string>
     <string name="zeros_three">000</string>
+    <string name="select_the_number_of_messages_title">Number of Messages</string>
+    <string name="number_of_messages_summary">Enter the number of messages in your display board</string>
 </resources>
