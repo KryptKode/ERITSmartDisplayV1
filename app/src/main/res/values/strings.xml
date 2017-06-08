@@ -21,4 +21,20 @@
     <string name="zeros_three">000</string>
     <string name="select_the_number_of_messages_title">Number of Messages</string>
     <string name="number_of_messages_summary">Enter the number of messages in your display board</string>
+    <string name="board_settings">Board Settings</string>
+    <string name="board_configuration">Configuration</string>
+    <string name="BRT_value">BRT Value</string>
+    <string name="set_BRT_value">BRT Value: %1$d</string>
+    <string name="adjust_brightness">Adjust the Brightness</string>
+    <string name="SPD_value">SPD Value</string>
+    <string name="set_SPD_value">SPD Value: %1$d</string>
+    <string name="adjust_speed">Adjust the Speed</string>
+    <string name="INV_value">INV Value</string>
+    <string name="set_INV">Set the INV value</string>
+    <string name="board_serial_number">Board Serial Number</string>
+    <string name="key_spd">spd</string>
+    <string name="key_brt">brt</string>
+    <string name="key_inv">inv</string>
+    <string name="key_number_of_msgs">number_of_messages</string>
+    <string name="key_serial">serial</string>
 </resources>

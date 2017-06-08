@@ -1,16 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
-        android:title="@string/select_the_number_of_messages_title"
-        android:summary="@string/number_of_messages_summary"
-        android:inputType="number"
-        android:maxLength="2"
-        android:maxLines="1"
-        android:defaultValue="8"
-        android:persistent="true"
-        android:key="number_of_msgs"
-        />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:example="http://schemas.android.com/apk/res/com.kryptkode.cyberman.SeekBarPreference"
+    xmlns:sample="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
 
+   <PreferenceCategory
+       android:title="@string/board_settings"
+       >
+       <com.yokkomi.commons.preference.seekbar.FollowSeekBarPreference
+           android:defaultValue="0"
+           android:key="@string/key_brt"
+           android:summary="@string/adjust_brightness"
+           android:title="@string/BRT_value"
+           app:explain="@string/adjust_brightness"
+           app:maxValue="30"
+           app:padding="8dp"
+           />
+
+       <com.yokkomi.commons.preference.seekbar.FollowSeekBarPreference
+           android:defaultValue="0"
+           android:key="@string/key_spd"
+           android:summary="@string/adjust_speed"
+           android:title="@string/SPD_value"
+           app:explain="@string/adjust_speed"
+           app:maxValue="30"
+           app:padding="8dp"
+           />
+        <ListPreference
+            android:title="@string/INV_value"
+            android:summary="@string/set_INV"
+            android:defaultValue="0"
+            android:persistent="true"
+            android:key="@string/key_inv"
+            android:entries="@array/inv_values"
+            android:entryValues="@array/inv_values"
+            />
+
+   </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/board_configuration">
+
+        <EditTextPreference
+            android:title="@string/select_the_number_of_messages_title"
+            android:summary="@string/number_of_messages_summary"
+            android:inputType="number"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:defaultValue="8"
+            android:persistent="true"
+            android:key="@string/key_number_of_msgs"
+            />
+
+        <EditTextPreference
+            android:id="@+id/board_serial_number"
+            android:title="@string/board_serial_number"
+            android:summary="000"
+            android:inputType="number"
+            android:maxLength="3"
+            android:maxLines="1"
+            android:defaultValue="000"
+            android:persistent="true"
+            android:key="@string/key_serial"
+            />
+
+
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

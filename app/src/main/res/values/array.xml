@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="messages">
-        <item>Message %d</item>
+        <item>Message 1</item>
         <item>Message 2</item>
         <item>Message 3</item>
+        <item>Message %d</item>
+    </string-array>
+
+    <string-array name="inv_values">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 
 </resources>
