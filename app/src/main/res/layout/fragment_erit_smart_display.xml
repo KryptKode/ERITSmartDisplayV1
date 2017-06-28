@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusableInTouchMode="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,8 +51,7 @@
                         android:id="@+id/spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/SpinnerStyle"
-                        android:entries="@array/messages"/>
+                        style="@style/SpinnerStyle"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                             app:srcCompat="@drawable/ic_mode_edit_black_24dp"/>
 
                         <android.support.design.widget.TextInputLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
                             <EditText
@@ -75,6 +75,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginRight="16dp"
+                                android:layout_marginEnd="16dp"
                                 android:hint="@string/enter_the_message"
                                 android:inputType="text"
                                 android:textSize="20sp"

@@ -18,12 +18,13 @@ import com.kryptkode.cyberman.eritsmartdisplay.fragments.EritSmartDisplayFragmen
 
 import static com.kryptkode.cyberman.eritsmartdisplay.R.id.quizFragment;
 
-public class EritSmartDisplayActivity extends AppCompatActivity implements EritSmartDisplayFragment.SpinnerEntriesChangeListener{
+public class EritSmartDisplayActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
     public static final String BRT_KEY = "brt";
     public static final String SPD_KEY = "spd";
     public static final String INV_KEY = "inv";
     public static final String NUM_OF_MSGS_KEY = "number_of_messages";
     public static final String SERIAL_KEY = "serial";
+    private Menu menu;
 
     private boolean phoneDevice = true; // to check if the device is a phone in order to set the layout for portrait mode
     private boolean preferencesChanged = true; //to check if the preference changed in order to update the UI with the current setting
@@ -41,15 +42,16 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements EritS
 
         //register the listener for the SharedPreferences changes
         PreferenceManager.getDefaultSharedPreferences(this).
-                registerOnSharedPreferenceChangeListener(preferencesChangeListener);
+                registerOnSharedPreferenceChangeListener(this);
+
+        setUpSpinner();
 
         //find the screen size
         int screenSize = getResources().getConfiguration().
                 screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         //if the device is a tablet, set the phoneDevice variable to false
-        if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE ||
-                screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE)
+        if (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE)
             phoneDevice = false;
 
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -64,30 +66,25 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements EritS
     @Override
     protected void onStart() {
         super.onStart();
-        if (preferencesChanged){
-            //since the default preferences have been set,
-            //initialize the MainActivityFragment and start the quiz
-            EritSmartDisplayFragment displayFragment =
-                    (EritSmartDisplayFragment) getSupportFragmentManager().findFragmentById(
-                            R.id.display_fragment);
-            displayFragment.displayText(PreferenceManager.getDefaultSharedPreferences(this));
-            displayFragment.setNum(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(NUM_OF_MSGS_KEY, null)));
-            displayFragment.addSpinnerEntries();
-            preferencesChanged = false;
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        if (phoneDevice){
-            getMenuInflater().inflate(R.menu.menu_erit_smart_display, menu);
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_erit_smart_display, menu);
+        if (!phoneDevice) {
+            hideSettingsMenu(R.id.action_settings);
+        }
             return true;
-        }
-        else{
-            return  false;
-        }
 
+
+
+    }
+
+    private void hideSettingsMenu(int id) {
+        MenuItem item = menu.findItem(id);
+        item.setVisible(false);
+        this.invalidateOptionsMenu();
     }
 
     @Override
@@ -136,13 +133,32 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements EritS
             }
             if (key.equals(NUM_OF_MSGS_KEY)){
                 //do something
-                displayFragment.setNum(Integer.parseInt(sharedPreferences.getString(NUM_OF_MSGS_KEY, null)));
             }
         }
     };
 
     @Override
-    public void addSpinnerEntries() {
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+          setUpSpinner();
+    }
+
+    public  void setUpSpinner(){
+        //since the default preferences have been set,
+        //initialize the MainActivityFragment and start the quiz
+        EritSmartDisplayFragment displayFragment =
+                (EritSmartDisplayFragment) getSupportFragmentManager().findFragmentById(
+                        R.id.display_fragment);
+        if (getCallingActivity() != null){
+            displayFragment.setNum(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(NUM_OF_MSGS_KEY, null)));
+            displayFragment.addSpinnerEntries();
+        }
 
     }
 }

@@ -5,7 +5,7 @@
         <item name="android:textSize">32sp</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:gravity">center_horizontal</item>\
     </style>
 
     <style name="PriceBoardTextView" parent="TextAppearance.AppCompat.Title">

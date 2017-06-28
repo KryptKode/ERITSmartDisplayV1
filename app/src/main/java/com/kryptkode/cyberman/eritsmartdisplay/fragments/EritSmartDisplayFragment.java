@@ -61,6 +61,13 @@ public class EritSmartDisplayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_erit_smart_display, container, false);
 
+        return  view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        View view = getView();
         //instantiate the views
         textView = (TextView) view.findViewById(R.id.test);
 
@@ -76,12 +83,6 @@ public class EritSmartDisplayFragment extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinner);
         //listener.addSpinnerEntries();
 
-        return  view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     public void addSpinnerEntries() {
