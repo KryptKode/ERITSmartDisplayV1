@@ -37,4 +37,5 @@
     <string name="key_inv">inv</string>
     <string name="key_number_of_msgs">number_of_messages</string>
     <string name="key_serial">serial</string>
+    <string name="unknown_uri">Unknown Uri</string>
 </resources>

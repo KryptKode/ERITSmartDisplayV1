@@ -28,6 +28,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kryptkode.cyberman.eritsmartdisplay.EritSmartDisplayActivity" />
         </activity>
+
+        <provider
+            android:authorities="com.kryptkode.cyberman.eritsmartdisplay.data"
+            android:name=".data.EritProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>
