@@ -10,15 +10,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kryptkode.cyberman.eritsmartdisplay.fragments.EritSmartDisplayFragment;
 
-import static com.kryptkode.cyberman.eritsmartdisplay.R.id.quizFragment;
 
-public class EritSmartDisplayActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class EritSmartDisplayActivity extends AppCompatActivity {
     public static final String BRT_KEY = "brt";
     public static final String SPD_KEY = "spd";
     public static final String INV_KEY = "inv";
@@ -26,6 +26,8 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
     public static final String SERIAL_KEY = "serial";
     private Menu menu;
 
+
+    EritSmartDisplayFragment smartDisplayFragment;
     private boolean phoneDevice = true; // to check if the device is a phone in order to set the layout for portrait mode
     private boolean preferencesChanged = true; //to check if the preference changed in order to update the UI with the current setting
 
@@ -42,16 +44,17 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
 
         //register the listener for the SharedPreferences changes
         PreferenceManager.getDefaultSharedPreferences(this).
-                registerOnSharedPreferenceChangeListener(this);
+                registerOnSharedPreferenceChangeListener(preferencesChangeListener);
 
-        setUpSpinner();
+
+        smartDisplayFragment = (EritSmartDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.display_fragment);
 
         //find the screen size
         int screenSize = getResources().getConfiguration().
                 screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         //if the device is a tablet, set the phoneDevice variable to false
-        if (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE)
+        if (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE)
             phoneDevice = false;
 
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -61,11 +64,7 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
                 Snackbar.make(view, R.string.your_data_is_saving, Snackbar.LENGTH_LONG).show();
             }
         });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -80,6 +79,14 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setUpSpinner(Integer.parseInt(PreferenceManager
+                .getDefaultSharedPreferences(this).getString(NUM_OF_MSGS_KEY, null)));
+    }
+
 
     private void hideSettingsMenu(int id) {
         MenuItem item = menu.findItem(id);
@@ -116,9 +123,9 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             preferencesChanged = true; //true because the user has changed the settings
 
-            EritSmartDisplayFragment displayFragment =
+            /*EritSmartDisplayFragment displayFragment =
                     (EritSmartDisplayFragment) getSupportFragmentManager().findFragmentById(
-                            R.id.display_fragment);
+                            R.id.display_fragment);*/
 
             if (key.equals(BRT_KEY)){
                 //do something
@@ -132,7 +139,8 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
 
             }
             if (key.equals(NUM_OF_MSGS_KEY)){
-                //do something
+               setUpSpinner(Integer.parseInt(PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext()).getString(NUM_OF_MSGS_KEY, null)));
             }
         }
     };
@@ -141,24 +149,18 @@ public class EritSmartDisplayActivity extends AppCompatActivity implements Share
     protected void onDestroy() {
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
-                .unregisterOnSharedPreferenceChangeListener(this);
+                .unregisterOnSharedPreferenceChangeListener(preferencesChangeListener);
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-          setUpSpinner();
-    }
 
-    public  void setUpSpinner(){
+
+    public  void setUpSpinner(int num){
         //since the default preferences have been set,
-        //initialize the MainActivityFragment and start the quiz
-        EritSmartDisplayFragment displayFragment =
-                (EritSmartDisplayFragment) getSupportFragmentManager().findFragmentById(
-                        R.id.display_fragment);
-        if (getCallingActivity() != null){
-            displayFragment.setNum(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(NUM_OF_MSGS_KEY, null)));
-            displayFragment.addSpinnerEntries();
-        }
+        //initialize the EritSmartDisplayFragment
+            smartDisplayFragment.setNum(num);
+            smartDisplayFragment.addSpinnerEntries();
+
 
     }
+
 }

@@ -2,10 +2,7 @@ package com.kryptkode.cyberman.eritsmartdisplay.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +31,7 @@ public class EritSmartDisplayFragment extends Fragment {
     private EditText pmsTwoDigitEditText;
     private EditText dpkTwoDigitEditText;
     private EditText agoTwoDigitEditText;
+    private int num;
 
     private SpinnerEntriesChangeListener listener;
 
@@ -45,7 +43,7 @@ public class EritSmartDisplayFragment extends Fragment {
         this.num = num;
     }
 
-    private int num;
+
 
     public EritSmartDisplayFragment() {
         // Required empty public constructor
@@ -55,34 +53,56 @@ public class EritSmartDisplayFragment extends Fragment {
         void addSpinnerEntries();
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_erit_smart_display, container, false);
 
-        return  view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        View view = getView();
         //instantiate the views
         textView = (TextView) view.findViewById(R.id.test);
-
         enterMessageEditText = (EditText) view.findViewById(R.id.edit_enter_message);
-
         pmsThreeDigitEditText = (EditText) view.findViewById(R.id.pms_000);
         pmsTwoDigitEditText = (EditText) view.findViewById(R.id.pms_00);
         dpkThreeDigitEditText = (EditText) view.findViewById(R.id.dpk_000);
         dpkTwoDigitEditText = (EditText) view.findViewById(R.id.dpk_00);
         agoTwoDigitEditText = (EditText) view.findViewById(R.id.ago_000);
         agoThreeDigitEditText = (EditText) view.findViewById(R.id.ago_00);
-
         spinner = (Spinner) view.findViewById(R.id.spinner);
-        //listener.addSpinnerEntries();
+        /*setNum(8);
+        addSpinnerEntries();*/
+        if(savedInstanceState != null){
+            num = savedInstanceState.getInt("INT");
+        }
 
+        return  view;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+       // listener.addSpinnerEntries();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+       // listener = (SpinnerEntriesChangeListener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+       // listener = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("INT", num);
     }
 
     public void addSpinnerEntries() {
