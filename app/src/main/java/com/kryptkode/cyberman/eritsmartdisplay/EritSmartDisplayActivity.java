@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kryptkode.cyberman.eritsmartdisplay.fragments.EritSmartDisplayFragment;
+import com.kryptkode.cyberman.eritsmartdisplay.utils.NetworkUtil;
 
 
 public class EritSmartDisplayActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
     public static final String INV_KEY = "inv";
     public static final String NUM_OF_MSGS_KEY = "number_of_messages";
     public static final String SERIAL_KEY = "serial";
+    private FloatingActionButton fab;
     private Menu menu;
 
 
@@ -38,7 +40,6 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         //set the default values in the shared preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -46,6 +47,9 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
         PreferenceManager.getDefaultSharedPreferences(this).
                 registerOnSharedPreferenceChangeListener(preferencesChangeListener);
 
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(fabListener);
 
         smartDisplayFragment = (EritSmartDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.display_fragment);
 
@@ -56,16 +60,15 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
         //if the device is a tablet, set the phoneDevice variable to false
         if (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE)
             phoneDevice = false;
-
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, R.string.your_data_is_saving, Snackbar.LENGTH_LONG).show();
-            }
-        });
-
     }
+
+    View.OnClickListener fabListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            smartDisplayFragment.saveData();
+            Snackbar.make(view, R.string.your_data_is_saving, Snackbar.LENGTH_LONG).show();
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,6 +88,13 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
         super.onStart();
         setUpSpinner(Integer.parseInt(PreferenceManager
                 .getDefaultSharedPreferences(this).getString(NUM_OF_MSGS_KEY, null)));
+
+        if(preferencesChanged){
+            smartDisplayFragment.setSerial(PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext()).getString(SERIAL_KEY, null));
+
+        }
+
     }
 
 
@@ -97,7 +107,6 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         switch (id){
 
             case R.id.action_settings:
@@ -106,6 +115,7 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
                 break;
             case R.id.action_sync:
                 //TODO: Add action
+                smartDisplayFragment.syncData();
                 Snackbar.make(findViewById(R.id.root), R.string.your_data_is_syncing, Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.action_about:
@@ -141,6 +151,10 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
             if (key.equals(NUM_OF_MSGS_KEY)){
                setUpSpinner(Integer.parseInt(PreferenceManager
                         .getDefaultSharedPreferences(getApplicationContext()).getString(NUM_OF_MSGS_KEY, null)));
+            }
+            if (key.equals(SERIAL_KEY)){
+                smartDisplayFragment.setSerial(PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext()).getString(SERIAL_KEY, null));
             }
         }
     };

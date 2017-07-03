@@ -67,6 +67,7 @@
                             app:srcCompat="@drawable/ic_mode_edit_black_24dp"/>
 
                         <android.support.design.widget.TextInputLayout
+                            android:id="@+id/edit_enter_message_text_input_layout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
@@ -151,6 +152,8 @@
                             android:layout_row="1"
                             android:layout_column="1"
                             android:hint="@string/zeros_three"
+                            android:nextFocusForward="@+id/pms_00"
+                            android:imeOptions="actionNext"
                             style="@style/EditTextStyle000"
                             />
 
@@ -160,7 +163,10 @@
                             android:layout_height="wrap_content"
                             android:layout_row="2"
                             android:layout_column="1"
+                            android:nextFocusForward="@+id/dpk_00"
+                            android:imeOptions="actionNext"
                             android:hint="@string/zeros_three"
+
                             style="@style/EditTextStyle000"
                             />
                         <EditText
@@ -170,6 +176,8 @@
                             android:layout_row="3"
                             android:layout_column="1"
                             android:hint="@string/zeros_three"
+                            android:nextFocusForward="@+id/ago_00"
+                            android:imeOptions="actionNext"
                             style="@style/EditTextStyle000"
                             />
                         <TextView
@@ -201,6 +209,7 @@
                             android:layout_row="1"
                             android:layout_column="3"
                             android:hint="@string/zeros"
+                            android:imeOptions="actionDone"
                             style="@style/EditTextStyle00"
                             />
                         <EditText
@@ -210,6 +219,7 @@
                             android:layout_row="2"
                             android:layout_column="3"
                             android:hint="@string/zeros"
+                            android:imeOptions="actionDone"
                             style="@style/EditTextStyle00"
                             />
                         <EditText
@@ -219,6 +229,7 @@
                             android:layout_row="3"
                             android:layout_column="3"
                             android:hint="@string/zeros"
+                            android:imeOptions="actionDone"
                             style="@style/EditTextStyle00"
                             />
 
