@@ -39,4 +39,9 @@
     <string name="key_serial">serial</string>
     <string name="unknown_uri">Unknown Uri</string>
     <string name="content_of_message">Content of Message</string>
+    <string name="erit_logo">erit logo</string>
+    <string name="allow_title">Allow Permisson</string>
+    <string name="allow_message">This app needs the permission to modify the system\'s settings in order to create hotspot</string>
+    <string name="yes">Allow</string>
+    <string name="noo">Cancel</string>
 </resources>

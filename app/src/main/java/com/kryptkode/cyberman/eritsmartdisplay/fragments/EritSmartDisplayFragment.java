@@ -243,7 +243,7 @@ public class EritSmartDisplayFragment extends Fragment implements LoaderManager.
             //get the message associated with the spinner and display on the edittext
           /*  if (!firstTime){*/
 
-            String key = String.valueOf(position);
+            String key = "msg" + String.valueOf(position + 1);
             String message = prefs.getString(key, "");
             enterMessageEditText.setText(message);
 
