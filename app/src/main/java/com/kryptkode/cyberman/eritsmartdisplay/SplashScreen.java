@@ -18,13 +18,13 @@ import com.kryptkode.cyberman.eritsmartdisplay.utils.WifiHotspot;
 
 import java.lang.ref.WeakReference;
 
-public class SplashScreen extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
-    private static  final int SPLASH_DISPLAY_LENGTH = 850;
+public class SplashScreen extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Boolean> {
+    private static  final int SPLASH_DISPLAY_LENGTH = 1500;
     private static final int WIFI_LOADER = 100;
 
     public static final String mSSID = "Erit Smart Display";
-    public static final String PASSWORD = "1234567890";
-    public static final int REQUEST_SETTINGS_PERMISSONS = 100;
+    public static final String PASSWORD = "1234567890"; //TODO: Add to build.gradle
+    public static final int REQUEST_SETTINGS_PERMISSONS = 200;
 
     private WifiHotspot hotspot;
 
@@ -42,14 +42,31 @@ public class SplashScreen extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    private void delayOneSecond() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startMainActivity();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    private void startMainActivity() {
+        Intent mainIntent = new Intent(this, EritSmartDisplayActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
     private void createHotspot() {
         h();
-        LoaderManager wifiHospotLoader = getSupportLoaderManager();
-        Loader<String> loader = wifiHospotLoader.getLoader(WIFI_LOADER);
-        if (loader == null) {
-            wifiHospotLoader.initLoader(WIFI_LOADER, null, this);
-        } else {
-            wifiHospotLoader.restartLoader(WIFI_LOADER, null, this);
+        if (Build.VERSION.SDK_INT < 23 || Settings.System.canWrite(getApplicationContext())) {
+            LoaderManager wifiHospotLoader = getSupportLoaderManager();
+            Loader<String> loader = wifiHospotLoader.getLoader(WIFI_LOADER);
+            if (loader == null) {
+                wifiHospotLoader.initLoader(WIFI_LOADER, null, this);
+            } else {
+                wifiHospotLoader.restartLoader(WIFI_LOADER, null, this);
+            }
         }
     }
 
@@ -62,7 +79,7 @@ public class SplashScreen extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    public void h() {
+    public  void h() {
         if (Build.VERSION.SDK_INT < 23 || Settings.System.canWrite(getApplicationContext())) {
             //something here
             return;
@@ -78,38 +95,50 @@ public class SplashScreen extends AppCompatActivity implements LoaderManager.Loa
                     g();
                 }
             });
-            builder.setNegativeButton(R.string.noo, new DialogInterface.OnClickListener() {
+          /* builder.setNegativeButton(R.string.noo, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.cancel();
                 }
-            });
+            });*/
+            builder.setCancelable(false);
             builder.show();
         }
     }
 
     @Override
-    public Loader<String> onCreateLoader(int id, Bundle args) {
-        return new AsyncTaskLoader<String>(this) {
+    public Loader<Boolean> onCreateLoader(int id, Bundle args) {
+        return new AsyncTaskLoader<Boolean>(this) {
+            @Override
+            protected void onStartLoading() {
+                forceLoad();
+            }
 
             @Override
-            public String loadInBackground() {
-                hotspot.setUpWifiHotspot(true);
-                return "success";
+            public Boolean loadInBackground() {
+
+                return hotspot.setUpWifiHotspot(true);
+            }
+
+            @Override
+            public void deliverResult(Boolean data) {
+                super.deliverResult(data);
             }
         };
     }
 
     @Override
-    public void onLoadFinished(Loader<String> loader, String data) {
-        Intent mainIntent = new Intent(this, EritSmartDisplayActivity.class);
-        startActivity(mainIntent);
-        finish();
+    public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
+        delayOneSecond();
     }
 
     @Override
-    public void onLoaderReset(Loader<String> loader) {
+    public void onLoaderReset(Loader<Boolean> loader) {
 
     }
+
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

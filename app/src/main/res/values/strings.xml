@@ -44,4 +44,5 @@
     <string name="allow_message">This app needs the permission to modify the system\'s settings in order to create hotspot</string>
     <string name="yes">Allow</string>
     <string name="noo">Cancel</string>
+    <string name="save">Save</string>
 </resources>

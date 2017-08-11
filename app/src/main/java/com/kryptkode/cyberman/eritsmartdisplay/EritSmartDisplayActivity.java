@@ -1,12 +1,19 @@
 package com.kryptkode.cyberman.eritsmartdisplay;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,6 +23,9 @@ import android.view.MenuItem;
 
 import com.kryptkode.cyberman.eritsmartdisplay.fragments.EritSmartDisplayFragment;
 import com.kryptkode.cyberman.eritsmartdisplay.utils.NetworkUtil;
+import com.kryptkode.cyberman.eritsmartdisplay.utils.WifiHotspot;
+
+import static com.kryptkode.cyberman.eritsmartdisplay.SplashScreen.REQUEST_SETTINGS_PERMISSONS;
 
 
 public class EritSmartDisplayActivity extends AppCompatActivity {
@@ -24,7 +34,9 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
     public static final String INV_KEY = "inv";
     public static final String NUM_OF_MSGS_KEY = "number_of_messages";
     public static final String SERIAL_KEY = "serial";
+    private static final int WIFI_LOADER = 300;
     private FloatingActionButton fab;
+    private WifiHotspot wifiHotspot;
     private Menu menu;
 
 
@@ -46,7 +58,7 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
         PreferenceManager.getDefaultSharedPreferences(this).
                 registerOnSharedPreferenceChangeListener(preferencesChangeListener);
 
-
+        wifiHotspot =  new WifiHotspot(this);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(fabListener);
 
@@ -93,15 +105,31 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(getApplicationContext()).getString(SERIAL_KEY, null));
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+       //if the hotspot is not turned on, turn it on
+            wifiHotspot.setUpWifiHotspot(true);
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+            wifiHotspot.setUpWifiHotspot(false);
+
+    }
 
     private void hideSettingsMenu(int id) {
         MenuItem item = menu.findItem(id);
         item.setVisible(false);
         this.invalidateOptionsMenu();
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -163,6 +191,7 @@ public class EritSmartDisplayActivity extends AppCompatActivity {
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(preferencesChangeListener);
+
     }
 
 

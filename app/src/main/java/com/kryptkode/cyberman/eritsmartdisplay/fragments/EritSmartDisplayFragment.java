@@ -119,6 +119,7 @@ public class EritSmartDisplayFragment extends Fragment implements LoaderManager.
         prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         enterMessageEditText.setOnEditorActionListener(this);
+        enterMessageEditText.setImeActionLabel(getString(R.string.save), EditorInfo.IME_ACTION_DONE);
         pmsThreeDigitEditText.setOnEditorActionListener(this);
         pmsTwoDigitEditText.setOnEditorActionListener(this);
         dpkThreeDigitEditText.setOnEditorActionListener(this);
@@ -141,13 +142,11 @@ public class EritSmartDisplayFragment extends Fragment implements LoaderManager.
         int id = v.getId();
         switch (id){
             case R.id.edit_enter_message:
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String key = "msg" + String.valueOf(spinner.getSelectedItemPosition() + 1) ;
                     String text = enterMessageEditText.getText().toString();
                     msgs.put(key, text);
                     dismissKeyboard();
                     Toast.makeText(getContext(), "Saved", Toast.LENGTH_LONG).show();
-                }
                 break;
             case R.id.dpk_000:
                 if (actionId == EditorInfo.IME_ACTION_NEXT){
@@ -193,7 +192,8 @@ public class EritSmartDisplayFragment extends Fragment implements LoaderManager.
         return true;
     }
     public  void  dismissKeyboard(){
-        //hide the soft keyboard
+        //hide the soft keyboard        this.context = context;
+
         ((InputMethodManager) getActivity().getSystemService(
                 Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                 getView().getWindowToken(), 0);
@@ -220,6 +220,39 @@ public class EritSmartDisplayFragment extends Fragment implements LoaderManager.
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("INT", num);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadPriceBoardData();
+    }
+
+    private void loadPriceBoardData() {
+        if (prefs.contains(SmartDisplay.AGO_KEY)){
+            String text = prefs.getString(SmartDisplay.AGO_KEY, "222");
+            agoThreeDigitEditText.setText(text);
+        }
+        if (prefs.contains(SmartDisplay.PMS_KEY)){
+            String text = prefs.getString(SmartDisplay.PMS_KEY, null);
+            pmsThreeDigitEditText.setText(text);
+        }
+        if (prefs.contains(SmartDisplay.DPK_KEY)){
+            String text = prefs.getString(SmartDisplay.DPK_KEY, null);
+            dpkThreeDigitEditText.setText(text);
+        }
+        if (prefs.contains(SmartDisplay.AGO_KEY0)){
+            String text = prefs.getString(SmartDisplay.AGO_KEY0, null);
+            agoTwoDigitEditText.setText(text);
+        }
+        if (prefs.contains(SmartDisplay.PMS_KEY0)){
+            String text = prefs.getString(SmartDisplay.PMS_KEY0, null);
+            pmsTwoDigitEditText.setText(text);
+        }
+        if (prefs.contains(SmartDisplay.DPK_KEY0)){
+            String text = prefs.getString(SmartDisplay.DPK_KEY0, null);
+            dpkTwoDigitEditText.setText(text);
+        }
     }
 
     public void addSpinnerEntries() {

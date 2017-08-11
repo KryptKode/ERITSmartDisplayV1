@@ -21,17 +21,19 @@ import static com.kryptkode.cyberman.eritsmartdisplay.SplashScreen.mSSID;
  */
 
 public class WifiHotspot {
-    private Context context;
+    private WifiManager wifiManager;
 
     public WifiHotspot(Context context) {
-        this.context = context;
+        this.wifiManager =(WifiManager)context.getApplicationContext().getSystemService(WIFI_SERVICE);
     }
 
-    public void setUpWifiHotspot(boolean enabled){
+
+
+    public boolean setUpWifiHotspot(boolean enabled){
         String SSID = mSSID;
         String PASS = PASSWORD;
 
-        WifiManager wifiManager = (WifiManager)context.getApplicationContext().getSystemService(WIFI_SERVICE);
+
 
         if (enabled){
             wifiManager.setWifiEnabled(false); //disables all existing Wi-Fi Connections
@@ -69,6 +71,12 @@ public class WifiHotspot {
             }
         }
 
+        return wifiManager.isWifiEnabled();
+
+    }
+
+    public boolean isHotspotOn(){
+        return wifiManager.isWifiEnabled();
     }
 
 }
